@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chatbot</title>
+</head>
+<body>
+  <h1>Chat with our AI</h1>
+  <textarea id="user_message" placeholder="Ask me anything"></textarea>
+  <button onclick="sendMessage()">Send</button>
+  <div id="bot_response"></div>
+
+  <script>
+    function sendMessage() {
+      const userMessage = document.getElementById('user_message').value;
+
+      fetch('http://your-django-api/chatbot/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `message=${userMessage}`,
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('bot_response').textContent = data.bot_message;
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  </script>
+</body>
+</html>
